@@ -1,0 +1,729 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MotoCarParts - Pièces détachées pour motos, voitures et camions</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700;900&family=Oswald:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #d32f2f;
+            --primary-dark: #b71c1c;
+            --secondary: #ffc107;
+            --dark: #212121;
+            --light: #f5f5f5;
+            --gray: #757575;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-color: var(--light);
+            color: var(--dark);
+            overflow-x: hidden;
+        }
+        
+        h1, h2, h3, h4, h5 {
+            font-family: 'Oswald', sans-serif;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        
+        .navbar {
+            background: linear-gradient(135deg, var(--dark) 0%, #000 100%);
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            padding: 15px 0;
+        }
+        
+        .navbar-brand {
+            font-weight: 800;
+            font-size: 1.8rem;
+            letter-spacing: 1.5px;
+        }
+        
+        .navbar-brand span:first-child {
+            color: var(--primary);
+        }
+        
+        .navbar-brand span:last-child {
+            color: var(--secondary);
+        }
+        
+        .nav-link {
+            color: #fff !important;
+            font-weight: 500;
+            margin: 0 10px;
+            position: relative;
+            transition: all 0.3s;
+        }
+        
+        .nav-link:after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: 0;
+            left: 0;
+            background-color: var(--secondary);
+            transition: width 0.3s;
+        }
+        
+        .nav-link:hover:after {
+            width: 100%;
+        }
+        
+        .hero {
+            background: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), url('https://images.unsplash.com/photo-1566891439633-e183f368493b?ixlib=rb-4.0.3&auto=format&fit=crop&w=1950&q=80') no-repeat center center/cover;
+            height: 90vh;
+            display: flex;
+            align-items: center;
+            color: white;
+            text-align: center;
+        }
+        
+        .hero h1 {
+            font-size: 4rem;
+            margin-bottom: 20px;
+            text-shadow: 2px 2px 5px rgba(0,0,0,0.5);
+        }
+        
+        .hero p {
+            font-size: 1.5rem;
+            max-width: 800px;
+            margin: 0 auto 30px;
+        }
+        
+        .btn-primary {
+            background-color: var(--primary);
+            border: none;
+            padding: 12px 30px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            transition: all 0.3s;
+        }
+        
+        .btn-primary:hover {
+            background-color: var(--primary-dark);
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+        
+        .btn-outline-light {
+            padding: 12px 30px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            transition: all 0.3s;
+        }
+        
+        .btn-outline-light:hover {
+            background-color: white;
+            color: var(--dark);
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+        
+        .section-title {
+            position: relative;
+            margin-bottom: 50px;
+            text-align: center;
+        }
+        
+        .section-title:after {
+            content: '';
+            position: absolute;
+            width: 100px;
+            height: 4px;
+            background: var(--primary);
+            bottom: -15px;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+        
+        .category-card {
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            transition: all 0.3s;
+            height: 100%;
+        }
+        
+        .category-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.15);
+        }
+        
+        .category-card img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+        }
+        
+        .category-card h3 {
+            color: var(--primary);
+            margin: 20px 0 10px;
+        }
+        
+        .brand-section {
+            background-color: var(--dark);
+            color: white;
+            padding: 80px 0;
+        }
+        
+        .brand-logo {
+            height: 80px;
+            filter: grayscale(100%);
+            opacity: 0.7;
+            transition: all 0.3s;
+        }
+        
+        .brand-logo:hover {
+            filter: grayscale(0);
+            opacity: 1;
+            transform: scale(1.1);
+        }
+        
+        .service-card {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            text-align: center;
+            transition: all 0.3s;
+            height: 100%;
+        }
+        
+        .service-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.15);
+        }
+        
+        .service-card i {
+            font-size: 3rem;
+            color: var(--primary);
+            margin-bottom: 20px;
+        }
+        
+        .contact-info {
+            background: var(--dark);
+            color: white;
+            padding: 30px;
+            border-radius: 10px;
+            height: 100%;
+        }
+        
+        .contact-info i {
+            color: var(--secondary);
+            font-size: 1.5rem;
+            margin-right: 10px;
+            width: 30px;
+        }
+        
+        .contact-form {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+        
+        .form-control:focus {
+            border-color: var(--primary);
+            box-shadow: 0 0 0 0.2rem rgba(211, 47, 47, 0.25);
+        }
+        
+        .online-service {
+            background: linear-gradient(135deg, var(--dark) 0%, #000 100%);
+            color: white;
+            padding: 80px 0;
+        }
+        
+        .chat-window {
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+        }
+        
+        .chat-header {
+            background: var(--primary);
+            color: white;
+            padding: 20px;
+            text-align: center;
+        }
+        
+        .chat-body {
+            padding: 20px;
+            height: 300px;
+            overflow-y: auto;
+        }
+        
+        .message {
+            margin-bottom: 15px;
+            max-width: 80%;
+        }
+        
+        .received {
+            background: #f0f0f0;
+            border-radius: 10px 10px 10px 0;
+            padding: 10px 15px;
+            float: left;
+            clear: both;
+        }
+        
+        .sent {
+            background: var(--primary);
+            color: white;
+            border-radius: 10px 10px 0 10px;
+            padding: 10px 15px;
+            float: right;
+            clear: both;
+        }
+        
+        .chat-footer {
+            padding: 15px;
+            border-top: 1px solid #eee;
+        }
+        
+        footer {
+            background: var(--dark);
+            color: white;
+            padding: 50px 0 20px;
+        }
+        
+        .footer-title {
+            position: relative;
+            padding-bottom: 15px;
+            margin-bottom: 20px;
+        }
+        
+        .footer-title:after {
+            content: '';
+            position: absolute;
+            width: 50px;
+            height: 3px;
+            background: var(--primary);
+            bottom: 0;
+            left: 0;
+        }
+        
+        .social-icon {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            background: rgba(255,255,255,0.1);
+            border-radius: 50%;
+            color: white;
+            margin-right: 10px;
+            transition: all 0.3s;
+        }
+        
+        .social-icon:hover {
+            background: var(--primary);
+            transform: translateY(-5px);
+        }
+        
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+            
+            .hero p {
+                font-size: 1.1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-dark sticky-top">
+        <div class="container">
+            <a class="navbar-brand" href="#"><span>MOTO</span><span>CAR</span>PARTS</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="#accueil">Accueil</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#categories">Catégories</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#marques">Marques</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#services">Services</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#contact">Contact</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#service-en-ligne">Service en ligne</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero" id="accueil">
+        <div class="container">
+            <h1>PIÈCES DÉTACHÉES POUR VÉHICULES</h1>
+            <p class="lead">Le spécialiste des pièces détachées pour motos (TMAX, Ducati, KTM, BMW, XMAX VANDERO, Honda Forza, Harley Davidson), voitures et camions</p>
+            <div class="d-flex justify-content-center gap-3">
+                <a href="#categories" class="btn btn-primary btn-lg">Voir les produits</a>
+                <a href="#contact" class="btn btn-outline-light btn-lg">Contactez-nous</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Catégories -->
+    <section class="py-5" id="categories">
+        <div class="container py-5">
+            <h2 class="section-title">Nos Catégories</h2>
+            <div class="row g-4">
+                <div class="col-md-4">
+                    <div class="category-card">
+                        <img src="https://images.unsplash.com/photo-1580273916550-e323be2ae537?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Pièces moto">
+                        <div class="p-4">
+                            <h3>Pièces pour Moto</h3>
+                            <p>Pièces détachées pour toutes marques de motos : TMAX, Ducati, KTM, BMW, XMAX VANDERO, Honda Forza, Harley Davidson</p>
+                            <a href="#" class="btn btn-outline-dark">Voir les pièces</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="category-card">
+                        <img src="https://images.unsplash.com/photo-1549317661-bd32c8ce0db2?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Pièces voiture">
+                        <div class="p-4">
+                            <h3>Pièces pour Voiture</h3>
+                            <p>Toutes pièces détachées pour voitures de toutes marques et modèles. Pièces neuves et d'origine garanties.</p>
+                            <a href="#" class="btn btn-outline-dark">Voir les pièces</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="category-card">
+                        <img src="https://images.unsplash.com/photo-1555215279-0b0864b5de08?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Pièces camion">
+                        <div class="p-4">
+                            <h3>Pièces pour Camion</h3>
+                            <p>Pièces détachées pour tous types de camions et véhicules utilitaires. Grand choix disponible.</p>
+                            <a href="#" class="btn btn-outline-dark">Voir les pièces</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Marques -->
+    <section class="brand-section" id="marques">
+        <div class="container">
+            <h2 class="section-title text-white">Marques Disponibles</h2>
+            <div class="row justify-content-center align-items-center g-4">
+                <div class="col-6 col-md-3 col-lg-2 text-center">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/4/44/Yamaha_logo.svg/1200px-Yamaha_logo.svg.png" alt="Yamaha" class="brand-logo">
+                </div>
+                <div class="col-6 col-md-3 col-lg-2 text-center">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/4/4c/Ducati_logo.svg/1200px-Ducati_logo.svg.png" alt="Ducati" class="brand-logo">
+                </div>
+                <div class="col-6 col-md-3 col-lg-2 text-center">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/7d/KTM_Logo.svg/1200px-KTM_Logo.svg.png" alt="KTM" class="brand-logo">
+                </div>
+                <div class="col-6 col-md-3 col-lg-2 text-center">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/4/44/BMW.svg/1200px-BMW.svg.png" alt="BMW" class="brand-logo">
+                </div>
+                <div class="col-6 col-md-3 col-lg-2 text-center">
+                    <img src="https://upload.wikimedia.org/wikipedia/fr/thumb/1/1b/Honda.svg/1200px-Honda.svg.png" alt="Honda" class="brand-logo">
+                </div>
+                <div class="col-6 col-md-3 col-lg-2 text-center">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/7a/Harley-Davidson_logo.svg/1200px-Harley-Davidson_logo.svg.png" alt="Harley Davidson" class="brand-logo">
+                </div>
+                <div class="col-6 col-md-3 col-lg-2 text-center">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/90/Mercedes-Logo.svg/1200px-Mercedes-Logo.svg.png" alt="Mercedes" class="brand-logo">
+                </div>
+                <div class="col-6 col-md-3 col-lg-2 text-center">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/6d/Volkswagen_logo_2019.svg/1200px-Volkswagen_logo_2019.svg.png" alt="Volkswagen" class="brand-logo">
+                </div>
+                <div class="col-6 col-md-3 col-lg-2 text-center">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/1c/Toyota.svg/1200px-Toyota.svg.png" alt="Toyota" class="brand-logo">
+                </div>
+                <div class="col-6 col-md-3 col-lg-2 text-center">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/6d/Ford_logo_flat.svg/1200px-Ford_logo_flat.svg.png" alt="Ford" class="brand-logo">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Services -->
+    <section class="py-5" id="services">
+        <div class="container py-5">
+            <h2 class="section-title">Nos Services</h2>
+            <div class="row g-4">
+                <div class="col-md-4">
+                    <div class="service-card">
+                        <i class="fas fa-shipping-fast"></i>
+                        <h3>Livraison Rapide</h3>
+                        <p>Livraison express partout au Cameroun. Recevez vos pièces en 24-48h dans les grandes villes.</p>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="service-card">
+                        <i class="fas fa-search"></i>
+                        <h3>Recherche de Pièces</h3>
+                        <p>Nous trouvons pour vous les pièces les plus rares. Un service de recherche spécialisé.</p>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="service-card">
+                        <i class="fas fa-cogs"></i>
+                        <h3>Conseils Techniques</h3>
+                        <p>Nos experts vous conseillent sur le choix et l'installation des pièces détachées.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact -->
+    <section class="py-5" id="contact">
+        <div class="container py-5">
+            <h2 class="section-title">Contactez-nous</h2>
+            <div class="row g-4">
+                <div class="col-lg-5">
+                    <div class="contact-info">
+                        <h3 class="mb-4">Nos Coordonnées</h3>
+                        <div class="d-flex align-items-start mb-4">
+                            <i class="fas fa-envelope"></i>
+                            <div>
+                                <h5>Email</h5>
+                                <p>guessm04@gmail.com</p>
+                            </div>
+                        </div>
+                        <div class="d-flex align-items-start mb-4">
+                            <i class="fas fa-phone"></i>
+                            <div>
+                                <h5>Téléphone</h5>
+                                <p>+237 620 574 211</p>
+                            </div>
+                        </div>
+                        <div class="d-flex align-items-start mb-4">
+                            <i class="fas fa-map-marker-alt"></i>
+                            <div>
+                                <h5>Adresse</h5>
+                                <p>Douala, Cameroun</p>
+                            </div>
+                        </div>
+                        <div class="d-flex align-items-start mb-4">
+                            <i class="fas fa-clock"></i>
+                            <div>
+                                <h5>Horaires d'ouverture</h5>
+                                <p>Lundi - Samedi: 8h00 - 18h00<br>Dimanche: Fermé</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-7">
+                    <div class="contact-form">
+                        <h3 class="mb-4">Envoyez un message</h3>
+                        <form>
+                            <div class="row g-3">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="name" class="form-label">Nom complet</label>
+                                        <input type="text" class="form-control" id="name" required>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="email" class="form-label">Email</label>
+                                        <input type="email" class="form-control" id="email" required>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="phone" class="form-label">Téléphone</label>
+                                        <input type="tel" class="form-control" id="phone">
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="subject" class="form-label">Sujet</label>
+                                        <input type="text" class="form-control" id="subject">
+                                    </div>
+                                </div>
+                                <div class="col-12">
+                                    <div class="form-group">
+                                        <label for="message" class="form-label">Message</label>
+                                        <textarea class="form-control" id="message" rows="5" required></textarea>
+                                    </div>
+                                </div>
+                                <div class="col-12">
+                                    <button type="submit" class="btn btn-primary">Envoyer le message</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Service en ligne -->
+    <section class="online-service" id="service-en-ligne">
+        <div class="container">
+            <h2 class="section-title text-white">Service Client en Ligne</h2>
+            <div class="row justify-content-center">
+                <div class="col-lg-8">
+                    <div class="chat-window">
+                        <div class="chat-header">
+                            <h4>Service Client - En ligne</h4>
+                            <p>Nous répondons à vos questions 7j/7</p>
+                        </div>
+                        <div class="chat-body">
+                            <div class="message received">
+                                <p>Bonjour, comment puis-je vous aider?</p>
+                            </div>
+                            <div class="message sent">
+                                <p>Bonjour, je recherche une pièce pour ma Yamaha TMAX</p>
+                            </div>
+                            <div class="message received">
+                                <p>Bien sûr, quel est le modèle exact et l'année de votre moto?</p>
+                            </div>
+                        </div>
+                        <div class="chat-footer">
+                            <div class="input-group">
+                                <input type="text" class="form-control" placeholder="Tapez votre message...">
+                                <button class="btn btn-primary">Envoyer</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="row g-5">
+                <div class="col-lg-4">
+                    <h4 class="footer-title">MOTOCARPARTS</h4>
+                    <p>Votre spécialiste en pièces détachées pour motos, voitures et camions. Large choix de pièces neuves et d'origine pour toutes marques.</p>
+                    <div class="mt-4">
+                        <a href="#" class="social-icon"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#" class="social-icon"><i class="fab fa-instagram"></i></a>
+                        <a href="#" class="social-icon"><i class="fab fa-whatsapp"></i></a>
+                        <a href="#" class="social-icon"><i class="fab fa-youtube"></i></a>
+                    </div>
+                </div>
+                <div class="col-lg-4">
+                    <h4 class="footer-title">Liens Rapides</h4>
+                    <ul class="list-unstyled">
+                        <li class="mb-2"><a href="#accueil" class="text-white text-decoration-none">Accueil</a></li>
+                        <li class="mb-2"><a href="#categories" class="text-white text-decoration-none">Catégories</a></li>
+                        <li class="mb-2"><a href="#marques" class="text-white text-decoration-none">Marques</a></li>
+                        <li class="mb-2"><a href="#services" class="text-white text-decoration-none">Services</a></li>
+                        <li class="mb-2"><a href="#contact" class="text-white text-decoration-none">Contact</a></li>
+                        <li class="mb-2"><a href="#service-en-ligne" class="text-white text-decoration-none">Service en ligne</a></li>
+                    </ul>
+                </div>
+                <div class="col-lg-4">
+                    <h4 class="footer-title">Contact</h4>
+                    <ul class="list-unstyled">
+                        <li class="d-flex align-items-center mb-3">
+                            <i class="fas fa-envelope me-3 text-primary"></i>
+                            <span>guessm04@gmail.com</span>
+                        </li>
+                        <li class="d-flex align-items-center mb-3">
+                            <i class="fas fa-phone me-3 text-primary"></i>
+                            <span>+237 620 574 211</span>
+                        </li>
+                        <li class="d-flex align-items-center mb-3">
+                            <i class="fas fa-map-marker-alt me-3 text-primary"></i>
+                            <span>Douala, Cameroun</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <hr class="mt-5" style="background: rgba(255,255,255,0.1);">
+            <div class="text-center py-3">
+                <p class="mb-0">© 2023 MOTOCARPARTS. Tous droits réservés.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // Animation du défilement fluide
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
+
+        // Fonctionnalité du chat
+        document.querySelector('.chat-footer button').addEventListener('click', function() {
+            const input = document.querySelector('.chat-footer input');
+            const message = input.value.trim();
+            
+            if (message) {
+                const chatBody = document.querySelector('.chat-body');
+                const newMessage = document.createElement('div');
+                newMessage.className = 'message sent';
+                newMessage.innerHTML = `<p>${message}</p>`;
+                chatBody.appendChild(newMessage);
+                
+                // Réponse automatique
+                setTimeout(() => {
+                    const autoReply = document.createElement('div');
+                    autoReply.className = 'message received';
+                    autoReply.innerHTML = '<p>Merci pour votre message. Notre équipe vous répondra dans les plus brefs délais.</p>';
+                    chatBody.appendChild(autoReply);
+                    chatBody.scrollTop = chatBody.scrollHeight;
+                }, 1000);
+                
+                input.value = '';
+                chatBody.scrollTop = chatBody.scrollHeight;
+            }
+        });
+
+        // Envoyer avec la touche Entrée
+        document.querySelector('.chat-footer input').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                document.querySelector('.chat-footer button').click();
+            }
+        });
+
+        // Animation des cartes au défilement
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('animate__animated', 'animate__fadeInUp');
+                }
+            });
+        }, { threshold: 0.1 });
+
+        document.querySelectorAll('.category-card, .service-card').forEach(card => {
+            observer.observe(card);
+        });
+    </script>
+</body>
+</html>
